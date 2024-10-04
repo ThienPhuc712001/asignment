@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xóa bài viết</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+        <div class="container mt-5">
+            <h2 class="text-center">Xóa bài viết</h2>
+            <form action="/articles/delete/<%= article._id %>" method="POST">
+                <div class="alert alert-warning" role="alert">
+                    Bạn có chắc chắn muốn xóa bài viết <strong>
+                        <%= article.title %>
+                    </strong> không?
+                </div>
+                <button type="submit" class="btn btn-danger">Xóa</button>
+                <a href="/articles" class="btn btn-secondary">Quay lại</a>
+            </form>
+        </div>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

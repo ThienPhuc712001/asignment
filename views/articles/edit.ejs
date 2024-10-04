@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa bài viết</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Chỉnh sửa bài viết</h2>
+        <form action="/articles/edit/<%= article._id %>" method="POST">
+            <div class="form-group">
+                <label for="title">Tiêu đề</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= article.title %>" required minlength="20" maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="author">Tác giả</label>
+                <input type="text" class="form-control" id="author" name="author" value="<%= article.author %>" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Danh mục</label>
+                <input type="text" class="form-control" id="category" name="category" value="<%= article.category %>">
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả</label>
+                <textarea class="form-control" id="description" name="description" rows="3"><%= article.description %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="content">Nội dung chi tiết</label>
+                <textarea class="form-control" id="content" name="content" rows="5" required><%= article.content %></textarea>
+            </div>
+            <div class="form-group">
+                <label for="thumbnail">Ảnh đại diện (Link)</label>
+                <input type="text" class="form-control" id="thumbnail" name="thumbnail" value="<%= article.thumbnail %>">
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái</label>
+                <select class="form-control" id="status" name="status">
+                    <option value="duyet" <%= article.status === 'duyet' ? 'selected' : '' %>>Đã duyệt</option>
+                    <option value="chua_duyet" <%= article.status === 'chua_duyet' ? 'selected' : '' %>>Chưa duyệt</option>
+                    <option value="da_xoa" <%= article.status === 'da_xoa' ? 'selected' : '' %>>Đã xóa</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a href="/articles" class="btn btn-secondary">Quay lại</a>
+        </form>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

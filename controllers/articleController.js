@@ -24,13 +24,35 @@ exports.createArticle = async (req, res) => {
     }
 };
 
+exports.updateArticle = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+        const article = await Article.findByIdAndUpdate(id, updates, { new: true });
+
+        res.status(200).json({ message: 'Cập nhật thành công', article });
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi cập nhật bài viết', error });
+    }
+};
+
 // Lấy danh sách bài viết
 exports.getArticles = async (req, res) => {
     try {
-        const articles = await Article.find().sort({ createdAt: -1 });
-        res.render('articles/list', { articles });
+        const { searchTitle, searchAuthor } = req.query; // Lấy các tham số tìm kiếm từ query
+        const filter = {};
+        if (searchTitle) {
+            filter.title = { $regex: searchTitle, $options: 'i' }; // Tìm kiếm không phân biệt chữ hoa chữ thường
+        }
+        if (searchAuthor) {
+            filter.author = { $regex: searchAuthor, $options: 'i' }; // Tìm kiếm không phân biệt chữ hoa chữ thường
+        }
+        const articles = await Article.find(filter); // Lấy danh sách bài viết theo bộ lọc
+
+        res.render('articles/list', { articles, searchTitle, searchAuthor });
     } catch (error) {
-        res.status(500).json({ message: 'Lỗi lấy danh sách bài viết', error });
+        console.error("Lỗi khi lấy danh sách bài viết:", error);
+        res.status(500).send("Có lỗi xảy ra.");
     }
 };
 
